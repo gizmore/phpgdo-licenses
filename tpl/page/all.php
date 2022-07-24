@@ -4,25 +4,20 @@ namespace GDO\Licenses\tpl\page;
 use GDO\Core\ModuleLoader;
 use GDO\UI\GDT_Accordeon;
 use GDO\UI\GDT_Pre;
-use GDO\UI\GDT_Headline;
+use GDO\Core\GDO_Module;
 
 $modules = ModuleLoader::instance()->getEnabledModules();
-
-$accordeon = GDT_Accordeon::make();
-$accordeon->titleRaw('Licenses');
-
-uasort($modules, function($a, $b) {
-    return strcmp($a->displayName(), $b->displayName());
+uasort($modules, function(GDO_Module $a, GDO_Module $b) {
+    return strcasecmp($a->renderName(), $b->renderName());
 });
 
 foreach ($modules as $module)
 {
-    $name = $module->displayName();
-    $title = "{$name} ({$module->module_license})";
+    $name = $module->renderName();
+    $title = "{$name} ({$module->license})";
     $pre = GDT_Pre::make()->textRaw($module->displayModuleLicense());
-    $accordeon->addSection($title, $pre);
+    $accordeon = GDT_Accordeon::make();
+    $accordeon->title($title);
+    $accordeon->addField($pre);
+    echo $accordeon->render();
 }
-
-echo GDT_Headline::make()->level(2)->text('licenses')->render();
-
-echo $accordeon->render();
