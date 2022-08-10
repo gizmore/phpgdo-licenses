@@ -95,7 +95,7 @@ final class Module_Licenses extends GDO_Module
     			$all .= GDT_Link::make()->
     			labelRaw(Strings::substrFrom($filename, GDO_WEB_ROOT, $filename))->
     			href($module->wwwPath($filename))->
-    			renderCell();
+    			renderHTML();
     			
     			$filename = $module->filePath($filename);
     			if (FileUtil::isFile($filename))
