@@ -7,6 +7,7 @@ use GDO\UI\GDT_Page;
 use GDO\UI\GDT_Link;
 use GDO\Util\FileUtil;
 use GDO\Util\Strings;
+use GDO\Markdown\Module_Markdown;
 
 /**
  * Print license and author information for all installed modules.
@@ -17,6 +18,14 @@ use GDO\Util\Strings;
  */
 final class Module_Licenses extends GDO_Module
 {
+	public function getFriendencies() : array
+	{
+		return ['Markdown'];
+	}
+	
+	##############
+	### Config ###
+	##############
     public function getConfig() : array
     {
         return [
@@ -47,6 +56,13 @@ final class Module_Licenses extends GDO_Module
     ###############
     ### License ###
     ###############
+    
+    public function getModuleMainLicenseName(GDO_Module $module) : string
+    {
+    	return $module->license;
+    }
+    
+    
     /**
      * Print license information.
      * @return string
@@ -61,6 +77,10 @@ final class Module_Licenses extends GDO_Module
     	
     	if ($descr = $module->getModuleDescription())
     	{
+    		if (module_enabled('Markdown'))
+    		{
+	    		$descr = Module_Markdown::decode($descr);
+    		}
     		$all .= "$descr\n$div";
     		if ($files)
     		{
@@ -93,9 +113,9 @@ final class Module_Licenses extends GDO_Module
     			}
     			
     			$all .= GDT_Link::make()->
-    			labelRaw(Strings::substrFrom($filename, GDO_WEB_ROOT, $filename))->
-    			href($module->wwwPath($filename))->
-    			renderHTML();
+	    			labelRaw(Strings::substrFrom($filename, GDO_WEB_ROOT, $filename))->
+	    			href($module->wwwPath($filename))->
+	    			renderHTML();
     			
     			$filename = $module->filePath($filename);
     			if (FileUtil::isFile($filename))
@@ -106,7 +126,7 @@ final class Module_Licenses extends GDO_Module
     	}
     	else
     	{
-    		$all .= 'UNLICENSED / PROPERITARY';
+    		$all .= 'GDOv7-LICENSE';
     	}
     	return $all;
     }

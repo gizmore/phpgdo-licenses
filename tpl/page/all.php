@@ -17,7 +17,7 @@ uasort($modules, function(GDO_Module $a, GDO_Module $b) {
 foreach ($modules as $module)
 {
     $name = $module->renderName();
-    $title = "{$name} ({$module->license})";
+    $title = "{$name} ({$ml->getModuleMainLicenseName($module)})";
     $pre = GDT_Pre::make()->textRaw($ml->getModuleLicense($module));
     $accordeon = GDT_Accordeon::make();
     $accordeon->title($title);
