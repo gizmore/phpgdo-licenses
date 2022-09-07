@@ -2,6 +2,7 @@
 namespace GDO\Licenses\Method;
 
 use GDO\UI\MethodPage;
+use GDO\Core\WithFileCache;
 
 /**
  * Display all licenses.
@@ -12,6 +13,8 @@ use GDO\UI\MethodPage;
  */
 final class All extends MethodPage
 {
+	use WithFileCache;
+	
     public function getMethodTitle() : string
     {
     	return t('licenses');
