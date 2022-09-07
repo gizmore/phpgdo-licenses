@@ -13,8 +13,6 @@ use GDO\Core\WithFileCache;
  */
 final class All extends MethodPage
 {
-	use WithFileCache;
-	
     public function getMethodTitle() : string
     {
     	return t('licenses');
