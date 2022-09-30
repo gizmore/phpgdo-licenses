@@ -9,7 +9,7 @@ use GDO\Core\GDT_String;
 use GDO\Core\ModuleLoader;
 
 /**
- * Change all licenses on the fly.
+ * Change all GDOv7 module licenses on the fly, unless they have a free license.
  * 
  * @author gizmore
  * @since 7.0.1

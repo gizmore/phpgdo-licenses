@@ -5,7 +5,7 @@ use GDO\UI\MethodPage;
 use GDO\Core\WithFileCache;
 
 /**
- * Display all licenses.
+ * Display all licenses for all modules and what the module does.
  * 
  * @author gizmore
  * @version 7.0.1
