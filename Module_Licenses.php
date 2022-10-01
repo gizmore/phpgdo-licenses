@@ -8,6 +8,7 @@ use GDO\UI\GDT_Link;
 use GDO\Util\FileUtil;
 use GDO\Util\Strings;
 use GDO\Markdown\Module_Markdown;
+use GDO\Install\Installer;
 
 /**
  * Print license and author information for all installed modules.
@@ -75,7 +76,7 @@ final class Module_Licenses extends GDO_Module
     	
     	$div = '<hr/>';
     	
-    	if ($descr = $module->getModuleDescription())
+    	if ($descr = Installer::getModuleDescription($module))
     	{
     		if (module_enabled('Markdown'))
     		{
