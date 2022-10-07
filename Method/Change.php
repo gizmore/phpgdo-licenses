@@ -7,6 +7,8 @@ use GDO\Core\GDO;
 use GDO\Core\GDT_Text;
 use GDO\Core\GDT_String;
 use GDO\Core\ModuleLoader;
+use GDO\Form\GDT_Submit;
+use GDO\Form\GDT_AntiCSRF;
 
 /**
  * Change all GDOv7 module licenses on the fly, unless they have a free license.
@@ -16,13 +18,19 @@ use GDO\Core\ModuleLoader;
  */
 final class Change extends MethodForm
 {
+	public function isTrivial(): bool
+	{
+		return false;
+	}
+	
 	public function createForm(GDT_Form $form) : void
 	{
 		$form->addFields(
 			GDT_Text::make('text')->notNull(),
 			GDT_String::make('filename')->initial('LICENSE')->notNull(),
+			GDT_AntiCSRF::make(),
 		);
-		$form->addFormButtons();
+		$form->actions()->addFields(GDT_Submit::make());
 	}
 	
 	public function formValidated(GDT_Form $form)
