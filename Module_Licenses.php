@@ -98,7 +98,7 @@ final class Module_Licenses extends GDO_Module
     			$count = count($files) - $gdo;
     			if ($count)
     			{
-    				$all .= "$count third-party-licenses involved:";
+    				$all .= t('3p_involved', [$count]);
     				$all .= "\n$div";
     			}
     		}
