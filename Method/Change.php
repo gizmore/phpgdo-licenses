@@ -2,6 +2,7 @@
 namespace GDO\Licenses\Method;
 
 use GDO\Core\GDO;
+use GDO\Core\GDT;
 use GDO\Core\GDT_String;
 use GDO\Core\GDT_Text;
 use GDO\Core\ModuleLoader;
@@ -34,7 +35,7 @@ final class Change extends MethodForm
 		$form->actions()->addFields(GDT_Submit::make());
 	}
 
-	public function formValidated(GDT_Form $form)
+	public function formValidated(GDT_Form $form): GDT
 	{
 		$text = $form->getFormVar('text');
 		$filename = $form->getFormVar('filename');
