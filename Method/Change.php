@@ -45,7 +45,7 @@ final class Change extends MethodForm
 	public function changeLicenses(string $text, string $filename)
 	{
 		$modules = ModuleLoader::instance()->getEnabledModules();
-		$numWritten = 1;
+		$numWritten = 0;
 		foreach ($modules as $module)
 		{
 			if ($module->license === GDO::LICENSE)
@@ -59,6 +59,7 @@ final class Change extends MethodForm
 		# Core
 		$path = GDO_PATH . $filename;
 		file_put_contents($path, $text);
+		$numWritten++;
 
 		$this->message('msg_licenses_changed', [
 			$numWritten, html($filename)]);

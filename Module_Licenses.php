@@ -1,6 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace GDO\Licenses;
 
+use GDO\Core\GDO;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
 use GDO\Install\Installer;
@@ -13,7 +15,7 @@ use GDO\Util\Strings;
 /**
  * Print license and author information for all installed modules.
  *
- * @version 7.0.1
+ * @version 7.0.3
  * @since 6.10.6
  * @author gizmore
  */
@@ -55,7 +57,7 @@ final class Module_Licenses extends GDO_Module
 		}
 	}
 
-	public function cfgFooter() { return $this->getConfigVar('hook_sidebar'); }
+	public function cfgFooter(): bool { return $this->getConfigValue('hook_sidebar'); }
 
 	###############
 	### License ###
@@ -69,8 +71,6 @@ final class Module_Licenses extends GDO_Module
 
 	/**
 	 * Print license information.
-	 *
-	 * @return string
 	 */
 	public function getModuleLicense(GDO_Module $module): string
 	{
@@ -84,21 +84,16 @@ final class Module_Licenses extends GDO_Module
 		{
 			if (module_enabled('Markdown'))
 			{
-				$descr = Module_Markdown::decode($descr);
+				$descr = Module_Markdown::DECODE($descr);
 			}
 			$all .= "$descr\n$div";
 			if ($files)
 			{
 				$gdo = 0; # gdo licenses
-				foreach ($files as $file)
+				if ($module->license === GDO::LICENSE)
 				{
-					# @TODO module is bullocks. how to identify a gdo license?
-					if ($module->filePath('LICENSE') === $module->filePath($file))
-					{
-						$gdo = 1;
-					}
+					$gdo = 1;
 				}
-
 				$count = count($files) - $gdo;
 				if ($count)
 				{
