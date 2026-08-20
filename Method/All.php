@@ -1,4 +1,4 @@
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<?php
+<?php
 namespace GDO\Licenses\Method;
 
 use GDO\Core\WithFileCache;
