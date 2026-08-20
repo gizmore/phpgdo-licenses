@@ -21,7 +21,7 @@ foreach ($modules as $module)
 	$title = "{$name} ({$ml->getModuleMainLicenseName($module)})";
 	$pre = GDT_Pre::make()->textRaw($ml->getModuleLicense($module));
 	$accordeon = GDT_Accordeon::make();
-	$accordeon->title($title);
+	$accordeon->titleRaw($title);
 	$accordeon->addField($pre);
 	echo $accordeon->render();
 }
