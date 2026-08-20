@@ -6,7 +6,6 @@ use GDO\Core\GDO;
 use GDO\Core\GDO_Module;
 use GDO\Core\GDT_Checkbox;
 use GDO\Install\Installer;
-use GDO\Markdown\Module_Markdown;
 use GDO\UI\GDT_Link;
 use GDO\UI\GDT_Page;
 use GDO\Util\FileUtil;
@@ -22,7 +21,7 @@ use GDO\Util\Strings;
 final class Module_Licenses extends GDO_Module
 {
 
-	public function getFriendencies(): array
+	public function getDependencies(): array
 	{
 		return ['Markdown'];
 	}
@@ -78,14 +77,10 @@ final class Module_Licenses extends GDO_Module
 
 		$files = $module->getLicenseFilenames();
 
-		$div = '<hr/>';
+		$div = "\n\n---\n\n";
 
 		if ($descr = Installer::getModuleDescription($module))
 		{
-			if (module_enabled('Markdown'))
-			{
-				$descr = Module_Markdown::DECODE($descr);
-			}
 			$all .= "$descr\n$div";
 			if ($files)
 			{
@@ -112,10 +107,8 @@ final class Module_Licenses extends GDO_Module
 					$all .= "\n$div";
 				}
 
-				$all .= GDT_Link::make()->
-				labelRaw(Strings::substrFrom($filename, GDO_WEB_ROOT, $filename))->
-				href($module->wwwPath($filename))->
-				renderHTML();
+				$label = Strings::substrFrom($filename, GDO_WEB_ROOT, $filename);
+				$all .= "[$label]({$module->wwwPath($filename)})\n\n";
 
 				$filename = $module->filePath($filename);
 				if (FileUtil::isFile($filename))

@@ -5,7 +5,8 @@ use GDO\Core\GDO_Module;
 use GDO\Core\ModuleLoader;
 use GDO\Licenses\Module_Licenses;
 use GDO\UI\GDT_Accordeon;
-use GDO\UI\GDT_Pre;
+use GDO\Markdown\Module_Markdown;
+use GDO\UI\GDT_HTML;
 
 $ml = Module_Licenses::instance();
 
@@ -19,9 +20,9 @@ foreach ($modules as $module)
 {
 	$name = $module->renderName();
 	$title = "{$name} ({$ml->getModuleMainLicenseName($module)})";
-	$pre = GDT_Pre::make()->textRaw($ml->getModuleLicense($module));
+	$markdown = GDT_HTML::make()->var(Module_Markdown::DECODE($ml->getModuleLicense($module)));
 	$accordeon = GDT_Accordeon::make();
 	$accordeon->titleRaw($title);
-	$accordeon->addField($pre);
+	$accordeon->addField($markdown);
 	echo $accordeon->render();
 }
